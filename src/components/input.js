@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import Attach from "../img/attach.png";
 import Img from "../img/img.png";
@@ -8,10 +7,10 @@ export default function Input() {
     <div className="input">
       <input type="text" placeholder="Type something..." />
       <div className="send">
-        <Image className="inputIcons" src={Attach} />
+        <img className="inputIcons" src={Attach} alt="damn" />
         <input type="file" style={{ display: "none" }} id="file" />
         <label htmlFor="file">
-          <Image className="inputIcons" src={Img} />
+          <img className="inputIcons" src={Img} alt="damn" />
         </label>
         <button>send</button>
       </div>

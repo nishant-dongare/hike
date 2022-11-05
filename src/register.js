@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddAvatar from "../img/addAvatar.png";
+import AddAvatar from "./img/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
@@ -63,7 +63,7 @@ export default function Register() {
           <input className="input" type="password" placeholder="password" />
           <input id="file" type="file" style={{ display: "none" }} />
           <label htmlFor="file">
-            <img src={AddAvatar} width={40} height={40} />
+            <img src={AddAvatar} width={40} height={40} alt="damn" />
             <span>Add an Avatar</span>
           </label>
           <button>Sign up</button>
