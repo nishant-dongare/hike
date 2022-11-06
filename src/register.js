@@ -12,7 +12,6 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // alert(e.target[0].value);
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
@@ -43,7 +42,7 @@ export default function Register() {
             await setDoc(doc(db, "userChats", res.user.uid), {});
             navigate("/");
             // setLoading(false);
-            alert("Registered Succesfully");
+            // alert("Registered Succesfully");
           });
         }
       );
