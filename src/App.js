@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext.js";
 
-function App() {
+export default function App() {
   const { currentUser } = useContext(AuthContext);
 
   const ProtectedRoute = ({ children }) => {
@@ -36,5 +36,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;
