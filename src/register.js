@@ -32,7 +32,7 @@ export default function Register() {
               displayName,
               photoURL,
             });
-            await setDoc(doc(db, "bots", res.user.uid), {
+            await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
               email,
               displayName,
