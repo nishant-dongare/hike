@@ -1,11 +1,13 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
 
 export default function Chatlist() {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
 
   useEffect(() => {
     const getChats = () => {
@@ -21,17 +23,11 @@ export default function Chatlist() {
     currentUser.uid && getChats();
   }, [currentUser.uid]);
 
-  // useEffect(() => {
-  //   const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
-  //     //console.log("Current data", doc.data());
-  //     setChats(doc.data());
-  //   });
+  const onSelect = (user) => {
+    dispatch({ type: "CHANGE_USER", payload: user });
+  };
 
-  //   return () => {
-  //     unsub();
-  //   };
-  // }, [currentUser.uid]);
-  console.log("chats", chats);
+  // console.log("chats", chats);
   return (
     <div className="chatlist">
       {Object.entries(chats)
@@ -40,7 +36,7 @@ export default function Chatlist() {
           <div
             className="userChat"
             key={chat[0]}
-            // onClick={() => handleSelect(chat[1].userInfo)}
+            onClick={() => onSelect(chat[1].userInfo)}
           >
             <img src={chat[1].userInfo.photoURL} alt="" />
             <div className="userChatInfo">
