@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import AddAvatar from "./img/addAvatar.png";
+import AddAvatar from "../img/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { db, auth, storage } from "./firebase";
+import { db, auth, storage } from "../firebase";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Register() {
   const [err, seterr] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const displayName = e.target[0].value;
     const email = e.target[1].value;
@@ -41,7 +43,6 @@ export default function Register() {
             //create empty user chats on firestore
             await setDoc(doc(db, "userChats", res.user.uid), {});
             navigate("/");
-            // setLoading(false);
             // alert("Registered Succesfully");
           });
         }
@@ -50,6 +51,7 @@ export default function Register() {
       seterr(true);
       alert(error.code + error.message);
     }
+    setLoading(false);
   };
   return (
     <div className="formContainer">
@@ -76,7 +78,8 @@ export default function Register() {
             <span>Add an Avatar</span>
           </label>
           <button>Sign up</button>
-          {err && <span>Something went wrong</span>}
+          {loading && "Uploading the image please wait..."}
+          {err && <span style={{ color: "red" }}>Something went wrong</span>}
         </form>
         <p>
           You do have an account? <Link to="/login">Login</Link>

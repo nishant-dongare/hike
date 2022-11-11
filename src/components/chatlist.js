@@ -5,9 +5,9 @@ import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
 
 export default function Chatlist() {
-  const [chats, setChats] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+  const [chats, setChats] = useState([]);
 
   useEffect(() => {
     const getChats = () => {

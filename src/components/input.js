@@ -1,6 +1,6 @@
 import { uuidv4 } from "@firebase/util";
 import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
-// import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
@@ -10,34 +10,34 @@ import Img from "../img/img.png";
 
 export default function Input() {
   const [text, setText] = useState("");
-  // const [img, setImg] = useState(null);
+  const [img, setImg] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
   const onSend = async () => {
-    // if (img) {
-    //   const storageRef = ref(storage, uuidv4());
-    //   const uploadTask = uploadBytesResumable(storageRef, img);
+    if (img) {
+      const storageRef = ref(storage, uuidv4());
+      const uploadTask = uploadBytesResumable(storageRef, img);
 
-    //   uploadTask.on(
-    //     (error) => {
-    //       //TODO:Handle Error
-    //     },
-    //     () => {
-    //       getDownloadURL(uploadTask.snapshot.ref).then(async (img) => {
-    //         await updateDoc(doc(db, "chats", data.chatId), {
-    //           messages: arrayUnion({
-    //             id: uuidv4(),
-    //             text: null,
-    //             senderId: currentUser.uid,
-    //             date: Timestamp.now(),
-    //             img,
-    //           }),
-    //         });
-    //       });
-    //     }
-    //   );
-    // }
+      uploadTask.on(
+        (error) => {
+          //TODO:Handle Error
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (img) => {
+            await updateDoc(doc(db, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: uuidv4(),
+                text: null,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img,
+              }),
+            });
+          });
+        }
+      );
+    }
     if (text && text !== "") {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
@@ -49,7 +49,7 @@ export default function Input() {
       });
     }
     setText("");
-    // setImg(null);
+    setImg(null);
   };
 
   return (
@@ -66,7 +66,7 @@ export default function Input() {
           type="file"
           style={{ display: "none" }}
           id="file"
-          // onChange={(e) => setImg(e.target.value)}
+          onChange={(e) => setImg(e.target.value)}
         />
         <label htmlFor="file">
           <img className="inputIcons" src={Img} alt="damn" />
