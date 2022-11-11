@@ -1,27 +1,55 @@
 import { uuidv4 } from "@firebase/util";
 import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
+// import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import Attach from "../img/attach.png";
 import Img from "../img/img.png";
 
 export default function Input() {
   const [text, setText] = useState("");
-  // const [img, setImg] = useState("");
+  // const [img, setImg] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
   const onSend = async () => {
-    await updateDoc(doc(db, "chats", data.chatId), {
-      messages: arrayUnion({
-        id: uuidv4(),
-        text,
-        senderId: currentUser.uid,
-        date: Timestamp.now(),
-      }),
-    });
+    // if (img) {
+    //   const storageRef = ref(storage, uuidv4());
+    //   const uploadTask = uploadBytesResumable(storageRef, img);
+
+    //   uploadTask.on(
+    //     (error) => {
+    //       //TODO:Handle Error
+    //     },
+    //     () => {
+    //       getDownloadURL(uploadTask.snapshot.ref).then(async (img) => {
+    //         await updateDoc(doc(db, "chats", data.chatId), {
+    //           messages: arrayUnion({
+    //             id: uuidv4(),
+    //             text: null,
+    //             senderId: currentUser.uid,
+    //             date: Timestamp.now(),
+    //             img,
+    //           }),
+    //         });
+    //       });
+    //     }
+    //   );
+    // }
+    if (text && text !== "") {
+      await updateDoc(doc(db, "chats", data.chatId), {
+        messages: arrayUnion({
+          id: uuidv4(),
+          text,
+          senderId: currentUser.uid,
+          date: Timestamp.now(),
+        }),
+      });
+    }
+    setText("");
+    // setImg(null);
   };
 
   return (
@@ -30,6 +58,7 @@ export default function Input() {
         type="text"
         placeholder="Type something..."
         onChange={(e) => setText(e.target.value)}
+        value={text}
       />
       <div className="send">
         <img className="inputIcons" src={Attach} alt="damn" />

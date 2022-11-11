@@ -19,7 +19,7 @@ export default function Register() {
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(res);
+      // console.log(res);
       const storageRef = ref(storage, email);
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
@@ -57,10 +57,20 @@ export default function Register() {
         <span className="logo">Hike</span>
         <span className="title">Register</span>
         <form className="form" onSubmit={handleSubmit}>
-          <input className="input" type="text" placeholder="display name" />
-          <input className="input" type="email" placeholder="email" />
-          <input className="input" type="password" placeholder="password" />
-          <input id="file" type="file" style={{ display: "none" }} />
+          <input
+            className="input"
+            type="text"
+            placeholder="display name"
+            required
+          />
+          <input className="input" type="email" placeholder="email" required />
+          <input
+            className="input"
+            type="password"
+            placeholder="password"
+            required
+          />
+          <input id="file" type="file" style={{ display: "none" }} required />
           <label htmlFor="file">
             <img src={AddAvatar} width={40} height={40} alt="damn" />
             <span>Add an Avatar</span>

@@ -27,11 +27,16 @@ export default function Login() {
         <span className="logo">Hike</span>
         <span className="title">Login</span>
         <form className="form" onSubmit={handleSubmit}>
-          <input className="input" type="email" placeholder="email" />
-          <input className="input" type="password" placeholder="password" />
+          <input className="input" type="email" placeholder="email" required />
+          <input
+            className="input"
+            type="password"
+            placeholder="password"
+            required
+          />
           <input id="file" type="file" style={{ display: "none" }} />
           <button>Login</button>
-          {err && <span>Something went wrong</span>}
+          {err && <span style={{ color: "red" }}>Something went wrong</span>}
         </form>
         <p>
           You don't have an account? <Link to="/register">Register</Link>
