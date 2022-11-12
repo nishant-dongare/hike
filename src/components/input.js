@@ -1,5 +1,11 @@
 import { uuidv4 } from "@firebase/util";
-import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  serverTimestamp,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -47,6 +53,19 @@ export default function Input() {
           date: Timestamp.now(),
         }),
       });
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
+        [data.chatId + ".lastMessage"]: {
+          text,
+        },
+        [data.chatId + ".date"]: serverTimestamp(),
+      });
+
+      await updateDoc(doc(db, "userChats", data.user.uid), {
+        [data.chatId + ".lastMessage"]: {
+          text,
+        },
+        [data.chatId + ".date"]: serverTimestamp(),
+      });
     }
     setText("");
     setImg(null);
@@ -61,7 +80,7 @@ export default function Input() {
         value={text}
       />
       <div className="send">
-        <img className="inputIcons" src={Attach} alt="damn" />
+        <img className="inputIcons" src={Attach} alt="" />
         <input
           type="file"
           style={{ display: "none" }}
@@ -69,7 +88,7 @@ export default function Input() {
           onChange={(e) => setImg(e.target.value)}
         />
         <label htmlFor="file">
-          <img className="inputIcons" src={Img} alt="damn" />
+          <img className="inputIcons" src={Img} alt="" />
         </label>
         <button onClick={onSend}>send</button>
       </div>

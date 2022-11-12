@@ -11,6 +11,7 @@ const Message = ({ message }) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
+  console.log("Message", message);
   return (
     <div
       ref={ref}
@@ -30,7 +31,7 @@ const Message = ({ message }) => {
       </div>
       <div className="messageContent">
         {message.text && <p>{message.text}</p>}
-        {message.img && <img src={message.img} alt="" />}
+        {message.img && <img src={message.img} alt={message.img} />}
       </div>
     </div>
   );

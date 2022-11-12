@@ -154,7 +154,9 @@
   font-weight: 500;
 }
 .userChatInfo > p {
-  font-size: 14px;
+  color: lightgray;
+  font-weight: 300;
+  font-size: 12px;
 }
 
 .chat {
@@ -169,7 +171,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  color: lightgray;
+  color: whitesmoke;
+  font-size: 18px;
+  font-weight: bold;
 }
 .chatIcons {
   display: flex;
