@@ -28,7 +28,13 @@ const Message = ({ message }) => {
       </div>
       <div className="messageContent">
         {message.text && (
-          <p style={{ borderRadius: isOwner && "10px 10px 0px 10px" }}>
+          <p
+            style={{
+              borderRadius: isOwner
+                ? "10px 10px 0px 10px"
+                : "0px 10px 10px 10px",
+            }}
+          >
             {message.text}
           </p>
         )}
