@@ -6,17 +6,14 @@ const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
   const ref = useRef();
+  const isOwner = message.senderId === currentUser.uid;
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
-  console.log("Message", message);
   return (
-    <div
-      ref={ref}
-      className={`message ${message.senderId === currentUser.uid && "owner"}`}
-    >
+    <div ref={ref} className={`message ${isOwner && "owner"}`}>
       <div className="messageInfo">
         <img
           src={
@@ -30,7 +27,11 @@ const Message = ({ message }) => {
         <span>just now</span>
       </div>
       <div className="messageContent">
-        {message.text && <p>{message.text}</p>}
+        {message.text && (
+          <p style={{ borderRadius: isOwner && "10px 10px 0px 10px" }}>
+            {message.text}
+          </p>
+        )}
         {message.img && <img src={message.img} alt={message.img} />}
       </div>
     </div>

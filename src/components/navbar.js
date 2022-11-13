@@ -12,11 +12,7 @@ export default function Navbar() {
     <div className="navbar">
       <span className="logo">Hike</span>
       <div className="user">
-        <img
-          className="profile area24"
-          src={currentUser.photoURL}
-          alt="profile"
-        ></img>
+        <img className="profile area24" src={currentUser.photoURL} alt=""></img>
         <span>{currentUser.displayName}</span>
         <button
           onClick={() => {

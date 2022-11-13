@@ -18,6 +18,7 @@ export default function Messages() {
     };
   }, [data.chatId]);
 
+  console.log("Messages", Messages);
   return (
     <div className="messages">
       {messages.map((m) => (
